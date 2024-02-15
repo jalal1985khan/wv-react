@@ -15,8 +15,16 @@ const Example = () => {
     try {
       const response = await fetch(url);
       const data = await response.json();
-      setMovies(data);
-      setShow(true);
+      console.log(data.length)
+      if (data.length != 0)
+      {
+        setMovies(data);
+        setShow(true);
+      }
+      else {
+        setShow(false);
+      }
+ 
     } catch (error) {
       console.log(error);
     }

@@ -586,7 +586,7 @@ export default function App() {
                         <Row>
                             <Col>
                             <div className="mb-3">
-                                    <label htmlfor="AboutBusiness" className="form-label">About the Business:</label>
+                                    <label htmlfor="AboutBusiness" className="form-label"><span className="errors">*</span>About the Business:</label>
                                     <textarea
                                         //required
                                         type="text"

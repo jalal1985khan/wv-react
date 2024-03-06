@@ -6,7 +6,7 @@ import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 const sendEmail = async (to, subject) => {
   try {
     // Set your SendGrid API key
-    const apiKey = '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'; // Replace with your SendGrid API key
+    const apiKey = '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'; // Replace with your SendGrid API key
 
     // SendGrid API endpoint
     const sendGridEndpoint = 'https://api.sendgrid.com/v3/mail/send';
@@ -54,6 +54,7 @@ const NewsletterForm = () => {
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [isNotEmpty, setIsNotEmpty] = useState(true);
   const [isSent, setIsSent] = useState(false);
+  const [saveError, setApiError] = useState(false);
 
   const handleEmailChange = (e) => {
     const newEmail = e.target.value;
@@ -70,7 +71,7 @@ const NewsletterForm = () => {
 
     try {
       // Save contact
-      const apiKey = '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'; // Replace with your SendGrid API key
+      const apiKey = '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'; // Replace with your SendGrid API key
       const response = await fetch('https://api.sendgrid.com/v3/marketing/contacts', {
         method: 'PUT',
         headers: {
@@ -88,7 +89,7 @@ const NewsletterForm = () => {
         const templateId = 'd-928effde4f674ad8b95ea8d8020051d5'; // Replace with your SendGrid template ID
         const dynamicTemplateData = { /* Add your template variables here */ };
 
-        await sendEmail(email, 'Your Email Subject', templateId);
+        //await sendEmail(email, 'Your Email Subject', templateId);
         // Set state to indicate successful subscription
         setIsSent(true);
       } else {
@@ -98,6 +99,7 @@ const NewsletterForm = () => {
       }
     } catch (error) {
       console.error('Error saving contact:', error);
+      setApiError(true)
     }
   };
 
@@ -114,7 +116,7 @@ const NewsletterForm = () => {
             <p className="n_text">Subscribe to the Walmart Vriddhi newsletter</p>
           </Col>
           <Col lg={4} sm={12}>
-            <Form onSubmit={handleSubmit}>
+            <Form >
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Control
                   type="email"
@@ -129,6 +131,11 @@ const NewsletterForm = () => {
                     {!isNotEmpty && <Form.Text className="text-danger">Email cannot be empty</Form.Text>}
                   </>
                 )}
+                {
+                  saveError ?(
+                    <Form.Text className="text-danger">ERROR:check the api</Form.Text>
+                  ):''
+                }
               </Form.Group>
             </Form>
           </Col>

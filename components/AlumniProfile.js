@@ -19,14 +19,15 @@ const SuccessStories = () => {
   const [showPre, setshowPre] = useState(false);
   const [noPosts, setnoPost] = useState(false);
   const [totalPages, setTotalPages] = useState(1);
+  const [hide, setHide] = useState(false);
 
   const postsPerPage = '9';
   const API_ENDPOINT = `${configData.SERVER_URL}walmart_graduates?_embed&categories[]=27&production[]=${configData.SERVER}&category_type[]=79&search=`;
 
   const NUM_PAGES_DISPLAYED = 5;
 
-  const taxonomyName = "staging"; // Replace with your actual taxonomy name
-  const taxonomyUrl = `${configData.SERVER_URL}category_type/79`;
+  const taxonomyName = "live"; // Replace with your actual taxonomy name
+  const taxonomyUrl = `${configData.SERVER_FROM}custom/v1/category_type_post_count/?category_type=79&production=${configData.SERVER}`;
 const fetchTaxonomyCount = async () => {
   try {
     const response = await fetch(taxonomyUrl);
@@ -82,12 +83,14 @@ const fetchTaxonomyCount = async () => {
       const response = await fetch(url);
       const data = await response.json();
       setProfile(data);
+      console.log(data)
           // Update total pages calculation
       
       
       if (postsPerPage > data.length) {
         setHideNext(true);
         setshowPre(false);
+        setHide(false);
       } else {
         setHideNext(false);
       }
@@ -96,6 +99,8 @@ const fetchTaxonomyCount = async () => {
       }
       if (data.length === 0) {
         setnoPost(true);
+        setHide(true);
+        console.log('zero hai')
       }
 
     } catch (error) {
@@ -104,7 +109,7 @@ const fetchTaxonomyCount = async () => {
   };
 
   const fetchCities = async () => {
-    let url = `${configData.SERVER_URL}walmart_graduates?_embed&per_page=60`;
+    let url = `${configData.SERVER_URL}walmart_graduates?_embed&categories[]=27&production[]=${configData.SERVER}&category_type[]=79&per_page=60`;
     try {
       const response = await fetch(url);
       const data = await response.json();
@@ -249,6 +254,7 @@ const fetchTaxonomyCount = async () => {
                 </div>
               </Col>
             ))}
+            hie
           </Row>
         ) : (
           <Row className="col-51">
@@ -287,12 +293,13 @@ const fetchTaxonomyCount = async () => {
                 </div>
               </Col>
             ))}
+              
           </Row>
         )}
 
-        {noPosts ? (
+        {hide ? (
           <Container>
-            no profile found
+            No profile found
           </Container>
         ) : (
           <>

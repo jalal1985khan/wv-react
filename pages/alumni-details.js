@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useRouter } from 'next/router';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import configData from "../config.json";
 import { NextSeo } from 'next-seo';
 import Header from '../components/Header';
@@ -10,12 +10,17 @@ import Form from 'react-bootstrap/Form';
 import NewsLetter from '../components/NewsLetter'
 import Floating from '../components/FloatingMenu'
 import Popups from '../components/PopUps'
+import Modal from 'react-bootstrap/Modal';
 
 
 export default function App() {
 
     const [loading, setLoading] = useState(false);
     const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+    const [show, setShow] = useState(false);
+    const closeModal = () => {
+        setShow(false);
+      };
 
     const handleCheckboxChange = () => {
         setIsCheckboxChecked(!isCheckboxChecked);
@@ -123,8 +128,8 @@ export default function App() {
     const [yourLocation, setLocation] = useState(null);
     const [yourBusinessCategory, setBusinessCategory] = useState(null);
     const [yourLinkProfile, setLinkProfile] = useState(null);
-    const [yourProfileImage, setProfileImage] = useState(null);
-    const [yourProductImage, setProductImage] = useState(null);
+    const [yourProfileImage, setProfileImage] = useState([]);
+    const [yourProductImage, setProductImages] = useState([]);
     const [yourAboutBusiness, setAboutBusiness] = useState(null);
     const [yourWebsiteLink, setWebsiteLink] = useState(null);
     const [yourFacebook, setFacebook] = useState(null);
@@ -145,17 +150,19 @@ export default function App() {
     const Myimg ="/images/registration_banner.png"
 
     const handleFileChange = (event) => {
-        setYourFile(event.target.files[0]);
-        setProfileImage(event.target.value)
+        setYourFile(event.target.value);
+        setProfileImage(Array.from(event.target.files))
       };
     const handleProductChange = (event) => {
-        setProductFile(event.target.files[0]);
-        setProductImage(event.target.value)
+        setProductFile(event.target.value);
+        //setProductImages(event.target.value)
+        setProductImages(Array.from(event.target.files));
     };
     
     const handleSubmit = event => {
         // 👇️ prevent page refresh
         event.preventDefault();
+        
 
     };
     const validateEmail = (email) => {
@@ -167,6 +174,59 @@ export default function App() {
     function createPost() {
         setErrors({}); 
         setLoader(true);
+        
+        const formData = new FormData();
+    formData.append('FullName', FullName);
+    formData.append('WVProgramID', WVProgramID);
+    formData.append('yourEmail', yourEmail);
+    formData.append('yourDesignation', yourDesignation);
+    formData.append('yourCompanyName', yourCompanyName);
+    formData.append('yourLocation', yourLocation);
+    formData.append('yourBusinessCategory', yourBusinessCategory);
+    formData.append('yourLinkProfile', yourLinkProfile);
+    formData.append('yourAboutBusiness', yourAboutBusiness);
+    formData.append('yourWebsiteLink', yourWebsiteLink);
+    formData.append('yourFacebook', yourFacebook);
+    formData.append('yourTwitter', yourTwitter);
+    formData.append('yourInstagram', yourInstagram);
+    formData.append('yourLinkedin', yourLinkedin);
+    formData.append('yourContactPoint', yourContactPoint);
+    formData.append('utm_source', query.utm_source);
+    formData.append('utm_medium', query.utm_medium);
+    formData.append('utm_campaign', query.utm_campaign);
+    formData.append('utm_id', query.utm_id);
+        
+    if (yourProfileImage.length === 0) {
+        setErrors(prevErrors => ({
+            ...prevErrors,
+            yourProfileImage: 'Please upload your profile image.',
+        }));
+        setLoader(false); // Stop loader
+        return;
+    }   
+        
+        
+    yourProductImage.forEach((file, index) => {
+            formData.append(`yourProductImage[${index}]`, file);
+    });
+        
+        
+    // Append product images
+    if (yourProductImage.length === 0) {
+        setErrors(prevErrors => ({
+            ...prevErrors,
+            yourProductImage: 'Please upload product image.',
+        }));
+        setLoader(false); // Stop loader
+        return;
+    }    
+        
+        
+        yourProfileImage.forEach((file, index) => {
+            formData.append(`yourProfileImage[${index}]`, file);
+        });
+
+
        // formData.append('yourProductImage', yourFile);
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -178,34 +238,42 @@ export default function App() {
             return;
             
         }
+        if (!yourAboutBusiness)
+        {
+            setErrors(prevErrors => ({
+                ...prevErrors,
+                yourAboutBusiness: 'Please enter about the Business.',
+            }));
+            return;
+        }
+        if (!yourProfileImage)
+        {
+            setErrors(prevErrors => ({
+                ...prevErrors,
+                yourProfileImage: 'Please upload your profile image.',
+            }));
+            return;
+        }
+        if (!yourProductImage)
+        {
+            setErrors(prevErrors => ({
+                ...prevErrors,
+                yourProductImage: 'Please upload product image.',
+            }));
+            return;
+        }
+        if (!yourContactPoint)
+        {
+            setErrors(prevErrors => ({
+                ...prevErrors,
+                yourContactPoint: 'Please select point of contact.',
+            }));
+            return;
+        }
 
-
-
-        axios.post(`${configData.SERVER_FROM}contact-form-7/v1/contact-forms/26552/feedback`,
-            {
-                'FullName': { FullName },
-                'WVProgramID': { WVProgramID },
-                'yourEmail': { yourEmail },
-                'yourDesignation': { yourDesignation },
-                'yourCompanyName': { yourCompanyName },
-                'yourLocation': { yourLocation },
-                'yourBusinessCategory': { yourBusinessCategory },
-                'yourLinkProfile': { yourLinkProfile },
-                'yourProfileImage': { yourFile },
-                'yourProductImage': { yourProduct },
-                'yourAboutBusiness': { yourAboutBusiness },
-                'yourWebsiteLink': { yourWebsiteLink },
-                'yourFacebook': { yourFacebook },
-                'yourTwitter': { yourTwitter },
-                'yourInstagram': { yourInstagram },
-                'yourLinkedin': { yourLinkedin },
-                'yourContactPoint': { yourContactPoint },
-                'utm_source': query.utm_source,
-                'utm_medium': query.utm_medium,
-                'utm_campaign': query.utm_campaign,
-                'utm_id': query.utm_id
-
-            }, {
+        axios.post(`${configData.SERVER_FROM}contact-form-7/v1/contact-forms/27012/feedback`,
+        formData,
+        {
             headers: {
                 "Content-Type": 'multipart/form-data',
             }
@@ -213,11 +281,33 @@ export default function App() {
         })
             .then((response) => {
                 setLoading(true)
-                //setPost(response.data.message);
+                setPost(response.data.message);
                 const msg = response.data.status;
+
+        setFullName(null);
+        setWVProgramID(null);
+        setEmail(null);
+        setDesignation(null);
+        setCompanyName(null);
+        setLocation(null);
+        setBusinessCategory(null);
+        setLinkProfile(null);
+        setProfileImage([]);
+        setProductImages([]);
+        setAboutBusiness(null);
+        setWebsiteLink(null);
+        setFacebook(null);
+        setTwitter(null);
+        setInstagram(null);
+        setLinkedin(null);
+        setFromTypes(null);
+        setCheckboxError(false);
+        setYourFile(null);
+        setProductFile(null);
                 
                 if (msg == 'mail_sent') {
                     setLoading(true);
+                    setShow(true);
                 }
                 else if (msg == 'validation_failed') {
                    
@@ -321,7 +411,7 @@ export default function App() {
                             </Col>
                             <Col>
                             <div className="mb-3">
-                                    <label htmlfor="yourPhone" className="form-label">Your Email:</label>
+                                    <label htmlfor="yourPhone" className="form-label"><span className="errors">*</span>Your Email:</label>
                                     <input
                                         //required
                                         type='email'
@@ -420,6 +510,7 @@ export default function App() {
                             <Col>
                             <div className="mb-3">
                                     <label htmlfor="LinkProfile" className="form-label">Business Images:</label>
+                                    
                                     <input
                                         //required
                                         type='text'
@@ -456,16 +547,16 @@ export default function App() {
                             </Col>
                             <Col>
                             <div className="mb-3">
-                                    <label htmlfor="ProfileImage" className="form-label">Profile Image(up to 3MB):</label>
+                                    <label htmlfor="ProfileImage" className="form-label"><span className="errors">*</span>Profile Image(up to 3MB):</label>
                                     <input
-                                        //required
+                                        required
                                         type="file"
                                         className={`form-control ${errors && errors.yourProfileImage ? 'is-invalid' : ''}`}
                                         id="yourProfileImage"
                                         name='yourProfileImage'
                                         placeholder="ProfileImage"
                                         multiple
-                                        value={yourProfileImage}
+                                        value={yourFile}
                                         //onChange={event => setProfileImage(event.target.value)}
                                         //event.target.files[0]
                                         onChange={handleFileChange}
@@ -475,16 +566,16 @@ export default function App() {
                             </Col>
                             <Col sm={6}>
                             <div className="mb-3">
-                                    <label htmlfor="ProductImage" className="form-label">Product Image (up to 3 images, maximum size of 7MB):</label>
+                                    <label htmlfor="ProductImage" className="form-label"><span className="errors">*</span>Product Image (up to 3 images, maximum size of 7MB):</label>
                                     <input
-                                        //required
+                                        required
                                         type="file"
                                         className={`form-control ${errors && errors.yourProductImage ? 'is-invalid' : ''}`}
                                         id="yourProductImage"
                                         name='yourProductImage'
                                         placeholder="Product Image"
                                         multiple
-                                        value={yourProductImage}
+                                        value={yourProduct}
                                         //onChange={event => setProductImage(event.target.value)}
                                         onChange={handleProductChange}
                                     />
@@ -635,13 +726,23 @@ export default function App() {
     >
         Submit
     </button>
-</Container>
-{loading && <h1 class="reg-success mt-4">{post}</h1>}
+                        </Container>
+
+        <Modal show={show} onHide={closeModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Successfully submitted</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="text-dark fs-5 p-4 bg-white">{post}</Modal.Body>
+      </Modal>
+
+                        {/* {loading && <h1 class="reg-success mt-4">{post}</h1>
+                        
+                        } */}
 </form>
 </Container>
 </Container>
             
-<Popups/>
+{/* <Popups/> */}
             <Floating/> 
             <NewsLetter/>
             <Footer />

@@ -73,8 +73,8 @@ export default function Home() {
     
     <div>
       <Header/>
-        {/* <Banner /> */}
-        <MsmeBanner/>
+        <Banner />
+        {/* <MsmeBanner/> */}
       <BrandLogo/>
       <Learning/>
       <Programme/>  

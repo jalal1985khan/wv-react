@@ -704,10 +704,10 @@ export default function App() {
                         
 </Container>
 <Container className="text-center">
-                            {
+                            {/* {
                                 loader ? 'show' :'hide'
 
-}
+} */}
                             
                             <button
         type='submit'

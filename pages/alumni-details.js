@@ -140,7 +140,7 @@ export default function App() {
     const [checkboxError, setCheckboxError] = useState(false);
     const [yourFile, setYourFile] = useState(null);
     const [yourProduct, setProductFile] = useState(null);
-    const [loader, setLoader] = useState(false);
+    const [loader, setLoader] = useState(false); //new entry here
 
     const router = useRouter();
     const { utm_source, utm_medium, utm_campaign, utm_id } = router.query;
@@ -204,12 +204,12 @@ export default function App() {
         setLoader(false); // Stop loader
         return;
     }   
-        
-        
-    yourProductImage.forEach((file, index) => {
-            formData.append(`yourProductImage[${index}]`, file);
+       
+    yourProfileImage.forEach((file, index) => {
+        formData.append(`yourProfileImage[${index}]`, file);
+        formData.append(`yourProfileLink[${index}]`, file);
     });
-        
+     
         
     // Append product images
     if (yourProductImage.length === 0) {
@@ -222,9 +222,9 @@ export default function App() {
     }    
         
         
-        yourProfileImage.forEach((file, index) => {
-            formData.append(`yourProfileImage[${index}]`, file);
-        });
+    yourProductImage.forEach((file, index) => {
+        formData.append(`yourProductImage[${index}]`, file);
+});        
 
 
        // formData.append('yourProductImage', yourFile);
@@ -244,6 +244,7 @@ export default function App() {
                 ...prevErrors,
                 yourAboutBusiness: 'Please enter about the Business.',
             }));
+            
             return;
         }
         if (!yourProfileImage)
@@ -308,6 +309,7 @@ export default function App() {
                 if (msg == 'mail_sent') {
                     setLoading(true);
                     setShow(true);
+                    setLoader(false); // new entry here
                 }
                 else if (msg == 'validation_failed') {
                    
@@ -551,7 +553,7 @@ export default function App() {
                                     <input
                                         required
                                         type="file"
-                                        className={`form-control ${errors && errors.yourProfileImage ? 'is-invalid' : ''}`}
+                                        className={`form-control ${errors && errors.yourProfileImage ? 'is-invalid focus' : ''}`}
                                         id="yourProfileImage"
                                         name='yourProfileImage'
                                         placeholder="ProfileImage"
@@ -704,14 +706,11 @@ export default function App() {
                         
 </Container>
 <Container className="text-center">
-                            {/* {
-                                loader ? 'show' :'hide'
-
-} */}
-                            
-                            <button
+{loader ? 'loading..' :'Show'}
+             
+<button
         type='submit'
-        className={`registers `}
+        className={loader ? 'registers disabled' :'registers disabled'}
         onClick={(e) => {
             e.preventDefault();
             // Check if the checkbox is checked
@@ -722,10 +721,11 @@ export default function App() {
                 createPost();
             }
         }}
-       
+        aria-disabled="true"
     >
-        Submit
-    </button>
+{loader ? 'Please wait..' :'Submit'}
+</button>
+                            
                         </Container>
 
         <Modal show={show} onHide={closeModal}>

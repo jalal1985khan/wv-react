@@ -15,15 +15,15 @@ function Summit2024() {
           />
 </Container>
 
-<Container className='wbg-blue-m rounded-3 mb-2 text-center' style={{width:'80'+'%'}}>
+<Container className='wbg-blue-m rounded-3 mb-2 text-center' style={{width:'20'+'%'}}>
 <Row class="d-flex justify-content-center pt-2">
 <Col lg="12" sm="12" className='pb-4 pt-4'>
 <h3 className='fs-3 text-white bogle-medium mb-2'>New Delhi</h3>
 <Image
-        src="/images/time.svg" 
+        src="/images/time.png" 
         alt="Bottom Corner Image"
         className="img-fluid"
-        style={{ width: '621px', height: '44px' }}
+        style={{ width: '200px', height: '30px' }}
       />
        </Col>
      </Row>

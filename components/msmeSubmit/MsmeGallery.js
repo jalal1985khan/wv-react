@@ -9,7 +9,7 @@ function Banner() {
     { photo: '/images/1.png', name: 'Najma Hashmi', title: 'Director International Trade India SME Forum', desc: 'Najma emphasized the importance of MSMEs as the backbone of the economy and their need for digital transformation, in line with India’s vision to become the third-largest global economy.' },
     { photo: '/images/2.png', name: 'Jason Fremstad', title: 'Senior Vice President, Supplier Development, Walmart', desc: 'Jason highlighted Walmart’s vision for supporting MSMEs nationwide and the impactful contributions made through Walmart Vriddhi, underscoring the expanding Indian economy.' },
     { photo: '/images/3.png', name: 'Rakesh Krishnan', title: 'Vice President and Head of Marketplace, Flipkart', desc: 'Rakesh delivered an engaging session on the transformative power of technology in business through eCommerce, offering invaluable insights for MSMEs looking to leverage digital platforms.' },
-    {photo:'/images/4.png',name: 'Sherry Lee Singh',title: 'Senior Director, Supplier Walmart Supplier Development, Walmart',desc:'Sherry focused on the significance of inclusion in supplier development. She also spoke about creating eCommerce opportunities for suppliers within Walmart’s supply chain.'  },
+    {photo:'/images/4.png',name: 'Sherry Lee Singh',title: 'Senior Director, Walmart Supplier Development, Walmart',desc:'Sherry focused on the significance of inclusion in supplier development. She also spoke about creating eCommerce opportunities for suppliers within Walmart’s supply chain.'  },
     
 ]
 

@@ -198,11 +198,13 @@ export default function App() {
     const query = router.query;
     const title = "Register with WalmartVriddhi - Walmart Vriddhi"
     const desc = "Fill the form to be a part of the Walmart Vriddhi program and unlock your business growth!"
-    const Myimg ="/images/registration_banner.png"
-    console.log('utm_source:' + utm_source);
-    console.log('utm_medium:' + utm_medium);
-    console.log('utm_campaign:' + utm_campaign);
-    console.log('utm_id' + utm_id);
+    const Myimg = "/images/registration_banner.png"
+    const yourDate = new Date().toLocaleDateString('en-IN');
+       // console.log(yourDate);
+    // console.log('utm_source:' + utm_source);
+    // console.log('utm_medium:' + utm_medium);
+    // console.log('utm_campaign:' + utm_campaign);
+    // console.log('utm_id' + utm_id);
 
 
     const stateData = State.getStatesOfCountry(selectCountry).map(state => ({
@@ -255,7 +257,7 @@ export default function App() {
         // 👇️ prevent page refresh
         event.preventDefault();
         
-        console.log(errors.yourEmail)
+        //console.log(errors.yourEmail)
         if (errors.yourEmail === 'Please enter a valid email address.')
         {
             setIsCheckboxChecked(true); 
@@ -296,6 +298,7 @@ export default function App() {
                 'yourEmail': { yourEmail },
                 'selectedSource': { selectedSource },
                 'otherSource': { otherSource },
+                'yourDate': { yourDate },
                 'utm_source': query.utm_source,
                 'utm_medium': query.utm_medium,
                 'utm_campaign': query.utm_campaign,
@@ -338,7 +341,7 @@ export default function App() {
                         fieldErrors[field.field] = field.message;
                     });
                     setErrors(fieldErrors);
-                    console.log(fieldErrors);
+                    //console.log(fieldErrors);
                     setIsCheckboxChecked(true);
 
                                    

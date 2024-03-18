@@ -11,6 +11,7 @@ import NewsLetter from '../components/NewsLetter'
 import Floating from '../components/FloatingMenu'
 import Popups from '../components/PopUps'
 import Modal from 'react-bootstrap/Modal';
+import contactForm from '../utils/Alumni'
 
 
 export default function App() {
@@ -103,44 +104,20 @@ export default function App() {
   { name: "Vishal Singh" },
   { name: "Vivek Kumar" },
   { name: "Yash Upadhayee" }
-      ];
-
-    const handleFromTypes = (e) => {
-        const type = typeList.find(
-            (type) => type.name === e.target.value
-        );
-        setFromTypes(type.name);
-    };
-
-   
+  ];
 
     // busness type function end here
-
-
-
     const [post, setPost] = useState(null);
     const [errors, setErrors] = useState({});
-    const [FullName, setFullName] = useState(null);
-    const [WVProgramID, setWVProgramID] = useState(null);
-    const [yourEmail, setEmail] = useState(null);
-    const [yourDesignation, setDesignation] = useState(null);
-    const [yourCompanyName, setCompanyName] = useState(null);
-    const [yourLocation, setLocation] = useState(null);
-    const [yourBusinessCategory, setBusinessCategory] = useState(null);
-    const [yourLinkProfile, setLinkProfile] = useState(null);
-    const [yourProfileImage, setProfileImage] = useState([]);
-    const [yourProductImage, setProductImages] = useState([]);
-    const [yourAboutBusiness, setAboutBusiness] = useState(null);
-    const [yourWebsiteLink, setWebsiteLink] = useState(null);
-    const [yourFacebook, setFacebook] = useState(null);
-    const [yourTwitter, setTwitter] = useState(null);
-    const [yourInstagram, setInstagram] = useState(null);
-    const [yourLinkedin, setLinkedin] = useState(null);
-    const [yourContactPoint, setFromTypes] = useState(null);
+    const [YourProductImage, setProductImages] = useState([]);
+    const [yourProfileImage, setProfileImage] = useState(null);
     const [checkboxError, setCheckboxError] = useState(false);
     const [yourFile, setYourFile] = useState(null);
     const [yourProduct, setProductFile] = useState(null);
+    const [FromTypes, setFromTypes] = useState(null);
     const [loader, setLoader] = useState(false); //new entry here
+    const [formData, setFormData] = useState({});
+    const [isInputnotEmpty, setIsinputNotEmpty] = useState(false);
 
     const router = useRouter();
     const { utm_source, utm_medium, utm_campaign, utm_id } = router.query;
@@ -149,141 +126,147 @@ export default function App() {
     const desc = "Fill the form to be a part of the Walmart Vriddhi program and unlock your business growth!"
     const Myimg ="/images/registration_banner.png"
 
-    const handleFileChange = (event) => {
-        setYourFile(event.target.value);
-        setProfileImage(Array.from(event.target.files))
-      };
-    const handleProductChange = (event) => {
-        setProductFile(event.target.value);
-        //setProductImages(event.target.value)
-        setProductImages(Array.from(event.target.files));
+    const handleFromTypes = (e) => {
+        const type = typeList.find(
+            (type) => type.name === e.target.value
+        );
+        setFromTypes(type.name);
+       // console.log(type.name)
+       
     };
     
-    const handleSubmit = event => {
-        // 👇️ prevent page refresh
-        event.preventDefault();
-    };
-   
-   
-   
-   
-   
-   
+
     const validateEmail = (email) => {
+        // Regular expression for validating email format
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        // Return true if the email matches the regex pattern, otherwise false
         return emailRegex.test(email);
-        setLoader(false);
     };
 
-    function createPost() {
-        setErrors({});
-        setLoader(true); // Start loader
     
+    const handleChange = (e) => {
+            const { name, value } = e.target;
+            setFormData(prevFormData => ({
+                ...prevFormData,
+                [name]: value, // Update the corresponding field based on the name
+            }));  
+    };
+
+    const handleFileChange = (e) => {
+        const selectedFile = e.target.files[0];
+        setProfileImage(selectedFile);
+        //alert(selectedFile)
+      };
+
+
+    const handleProductChange = (e) => {
+        const files = e.target.files;
+        // Convert FileList to array
+        const fileList = Array.from(files);
+        // Update product images state
+        setProductImages(fileList);
+    };
+
+
+
+
+    
+    const handleSubmit = async(event) => {
+        // 👇️ prevent page refresh
+        event.preventDefault();
+        setLoader(true);
+        // Perform form empty validation
+
+       
+
+
+
+    // if (!FullName || !WVProgramID || !yourEmail || !yourDesignation || !yourCompanyName || !yourLocation || !yourBusinessCategory || !FromTypes || !yourAboutBusiness || !yourLinkProfile || !yourWebsiteLink || !yourFacebook || !yourTwitter || !yourInstagram || !yourLinkedin || !YourProductImage.length) {
+    //     setErrors({ formEmpty: "Please fill out all fields" });
+    //     return;
+    // }
+
+    // Perform email validation
+
+
+        // // Reset errors if no validation errors
+        
+
+        
+        if (!yourEmail.value || !yourAboutBusiness.value  || !FromTypes  || !YourProductImage.length) {
+            setErrors({ formEmpty: "Please fill out all fields" });
+           //return;
+           console.log('feilds are empty')
+           
+
+       }
+        
+        
+
+        if (!isCheckboxChecked ) {
+            setCheckboxError(true);
+            console.log('please check the checkbox');
+            setLoader(false);
+        } else {
+            setCheckboxError(false);
+            console.log('checked');
+            setLoader(false);
+
+           
+
+
+
+
         const formData = new FormData();
-        formData.append('FullName', FullName);
-        formData.append('WVProgramID', WVProgramID);
-        formData.append('yourEmail', yourEmail);
-        formData.append('yourDesignation', yourDesignation);
-        formData.append('yourCompanyName', yourCompanyName);
-        formData.append('yourLocation', yourLocation);
-        formData.append('yourBusinessCategory', yourBusinessCategory);
-        formData.append('yourLinkProfile', yourLinkProfile);
-        formData.append('yourAboutBusiness', yourAboutBusiness);
-        formData.append('yourWebsiteLink', yourWebsiteLink);
-        formData.append('yourFacebook', yourFacebook);
-        formData.append('yourTwitter', yourTwitter);
-        formData.append('yourInstagram', yourInstagram);
-        formData.append('yourLinkedin', yourLinkedin);
-        formData.append('yourContactPoint', yourContactPoint);
-        formData.append('utm_source', query.utm_source);
-        formData.append('utm_medium', query.utm_medium);
-        formData.append('utm_campaign', query.utm_campaign);
-        formData.append('utm_id', query.utm_id);
-    
-        // Append profile images
-        if (yourProfileImage.length === 0) {
-            setErrors(prevErrors => ({
-                ...prevErrors,
-                yourProfileImage: 'Please upload your profile image.',
-            }));
-            setLoader(false); // Stop loader
-            return;
-        }
-        yourProfileImage.forEach((file, index) => {
-            formData.append(`yourProfileImage[${index}]`, file);
+        formData.append('FullName', FullName.value);
+        formData.append('WVProgramID', WVProgramID.value);
+        formData.append('yourEmail', yourEmail.value);
+        formData.append('yourDesignation', yourDesignation.value);
+        formData.append('yourCompanyName', yourCompanyName.value);
+        formData.append('yourLocation', yourLocation.value); 
+        formData.append('yourBusinessCategory', yourBusinessCategory.value);
+        formData.append('yourContactPoint', FromTypes);
+        formData.append('yourAboutBusiness', yourAboutBusiness.value);
+        formData.append('yourLinkProfile', yourLinkProfile.value);
+        formData.append('yourWebsiteLink', yourWebsiteLink.value);
+        formData.append('yourFacebook', yourFacebook.value);
+        formData.append('yourTwitter', yourTwitter.value);
+        formData.append('yourInstagram', yourInstagram.value);
+        formData.append('yourLinkedin', yourLinkedin.value);
+        formData.append('yourProfileImage', yourProfileImage);      
+             // Append product images
+        YourProductImage.forEach((image, index) => {
+        formData.append(`yourProductImage_${index}`, image);
+        // formData.append(`yourProductImage`, image);
         });
-    
-        // Append product images
-        if (yourProductImage.length === 0) {
-            setErrors(prevErrors => ({
-                ...prevErrors,
-                yourProductImage: 'Please upload product image.',
-            }));
-            setLoader(false); // Stop loader
-            return;
-        }
-        yourProductImage.forEach((file, index) => {
-            formData.append(`yourProductImage[${index}]`, file);
-        });
-    
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(yourEmail)) {
-            setErrors(prevErrors => ({
-                ...prevErrors,
-                yourEmail: 'Please enter a valid email address.',
-            }));
-            setLoader(false); // Stop loader
-            return;
-        }
-    
-        if (!yourAboutBusiness) {
-            setErrors(prevErrors => ({
-                ...prevErrors,
-                yourAboutBusiness: 'Please enter about the Business.',
-            }));
-            setLoader(false); // Stop loader
-            return;
-        }
-    
-        if (!yourContactPoint) {
-            setErrors(prevErrors => ({
-                ...prevErrors,
-                yourContactPoint: 'Please select point of contact.',
-            }));
-            setLoader(false); // Stop loader
-            return;
-        }
-    
-        axios.post(`${configData.SERVER_FROM}contact-form-7/v1/contact-forms/26975/feedback`,
-            formData,
-            {
-                headers: {
-                    "Content-Type": 'multipart/form-data',
-                }
-            })
-            .then((response) => {
-                setLoading(false);
-                setPost(response.data.message);
-                const msg = response.data.status;
-    
-                if (msg === 'mail_sent') {
-                    setShow(true);
-                } else if (msg === 'validation_failed') {
-                    const fieldErrors = {};
-                    const { invalid_fields } = response.data;
-                    invalid_fields.forEach((field) => {
-                        fieldErrors[field.field] = field.message;
-                    });
-                    setErrors(fieldErrors);
-                }
-                console.log(response.data);
-            })
-            .catch(error => {
-                setLoading(false);
-                console.error('Error submitting form:', error);
+            
+        try {
+            const response = await fetch(`${configData.SERVER_FROM}contact-form-7/v1/contact-forms/270120/feedback`, {
+              method: 'POST',
+              body: formData,
             });
-    }
     
+            if (response.ok) {
+              //console.log(response)
+              console.log('File uploaded successfully');
+              setSuccess(false);
+              //setPost("Your resume has been sent successfully");
+              setLoading(true);
+              setLoader(false);
+            } else {
+                console.error('File upload failed');
+                setLoader(false);
+            }
+          } catch (error) {
+            console.error('Error uploading file:', error);
+            setLoader(false);
+        }
+            
+    }
+        
+    };
+    
+
 
 
     
@@ -332,7 +315,7 @@ export default function App() {
                 <p className="fs-2  text-center pt-5 fw-bold bogle-bold walmart-default">Alumni Details</p>
                 <Container className="p-4 px-4 reg-wid">
                 <form
-                    onSubmit={handleSubmit}
+                    onSubmit={handleSubmit} encType='multipart/form-data'
                         style={{ margin: '20px' }}>
                     <Row>
                             <Col sm={6} lg={3}>
@@ -345,10 +328,15 @@ export default function App() {
                                         id="FullName"
                                         name='FullName'
                                         placeholder="Full Name"
-                                        value={FullName}
-                                        onChange={event => setFullName(event.target.value)}
+                                        //value={FullName}
+                                        //onChange={event => setFullName(event.target.value)}
+                                        //value={FullName}
+                                        value={formData.FullName}
+                                        onChange={handleChange}
                                     />
-   {errors && errors.FullName && <div className="invalid-feedback">{errors.FullName}</div>}
+                                    {errors.FullName}
+                                    {errors && errors.FullName && <div className="invalid-feedback">{errors.FullName}</div>}
+                                    {errors.formEmpty && <div className="error">{errors.formEmpty}</div>}
                                 </div>
                             </Col>                
                             <Col sm={6} lg={3}>
@@ -361,8 +349,10 @@ export default function App() {
                                         id="WVProgramID"
                                         name='WVProgramID'
                                         placeholder="WV Program ID"
-                                        value={WVProgramID}
-                                        onChange={event => setWVProgramID(event.target.value)}
+                                        // value={WVProgramID}
+                                        // onChange={event => setWVProgramID(event.target.value)}
+                                        value={formData.WVProgramID}
+                                        onChange={handleChange}
                                     />
                                     {errors && errors.WVProgramID && <div className="invalid-feedback">{errors.WVProgramID}</div>}
                                 </div>
@@ -377,23 +367,10 @@ export default function App() {
                                         id="yourEmail"
                                         name='yourEmail'
                                         placeholder="test@test.com"
-                                        value={yourEmail}
-                                        onChange={(event) => {
-                                            setEmail(event.target.value);
-                                            // Validate email while typing
-                                            const isValid = validateEmail(event.target.value);
-                                            if (!isValid) {
-                                                setErrors(prevErrors => ({
-                                                    ...prevErrors,
-                                                    yourEmail: 'Please enter a valid email address.',
-                                                }));
-                                            } else {
-                                                setErrors(prevErrors => ({
-                                                    ...prevErrors,
-                                                    yourEmail: null,
-                                                }));
-                                            }
-                                        }}
+                                        // value={yourEmail}
+                                        value={formData.yourEmail}
+                                        onChange={handleChange}
+                                       
                                     />
                                     {errors && errors.yourEmail && <div className="invalid-feedback">{errors.yourEmail}</div>}
                                 </div>
@@ -409,8 +386,10 @@ export default function App() {
                                         id="yourDesignation"
                                         name='yourDesignation'
                                         placeholder="Designation"
-                                        value={yourDesignation}
-                                        onChange={event => setDesignation(event.target.value)}
+                                        // value={yourDesignation}
+                                        // onChange={event => setDesignation(event.target.value)}
+                                        value={formData.yourDesignation}
+                                        onChange={handleChange}
                                     />
                                     {errors && errors.yourDesignation && <div className="invalid-feedback">{errors.yourDesignation}</div>}
                                 </div>
@@ -424,11 +403,13 @@ export default function App() {
                                         //required
                                         type='text'
                                         className={`form-control ${errors && errors.yourCompanyName ? 'is-invalid' : ''}`}
-                                        id="CompanyName"
+                                        id="yourCompanyName"
                                         name='yourCompanyName'
                                         placeholder="Company Name"
-                                        value={yourCompanyName}
-                                        onChange={event => setCompanyName(event.target.value)}
+                                        // value={yourCompanyName}
+                                        // onChange={event => setCompanyName(event.target.value)}
+                                        value={formData.yourCompanyName}
+                                        onChange={handleChange}
                                     />
                                     {errors && errors.yourCompanyName && <div className="invalid-feedback">{errors.yourCompanyName}</div>}
                                 </div> 
@@ -443,8 +424,10 @@ export default function App() {
                                         id="yourLocation"
                                         name='yourLocation'
                                         placeholder="Location"
-                                        value={yourLocation}
-                                        onChange={event => setLocation(event.target.value)}
+                                        // value={yourLocation}
+                                        // onChange={event => setLocation(event.target.value)}
+                                        value={formData.yourLocation}
+                                        onChange={handleChange}
                                     />
                                     {errors && errors.yourLocation && <div className="invalid-feedback">{errors.yourLocation}</div>}
                                 </div> 
@@ -459,8 +442,10 @@ export default function App() {
                                         id="yourBusinessCategory"
                                         name='yourBusinessCategory'
                                         placeholder="Business Category"
-                                        value={yourBusinessCategory}
-                                        onChange={event => setBusinessCategory(event.target.value)}
+                                        // value={yourBusinessCategory}
+                                        // onChange={event => setBusinessCategory(event.target.value)}
+                                        value={formData.yourBusinessCategory}
+                                        onChange={handleChange}
                                     />
                                     {errors && errors.yourBusinessCategory && <div className="invalid-feedback">{errors.yourBusinessCategory}</div>}
                                 </div> 
@@ -476,8 +461,10 @@ export default function App() {
                                         id="yourLinkProfile"
                                         name='yourLinkProfile'
                                         placeholder="Link for Profile & Business Images"
-                                        value={yourLinkProfile}
-                                        onChange={event => setLinkProfile(event.target.value)}
+                                        // value={yourLinkProfile}
+                                        // onChange={event => setLinkProfile(event.target.value)}
+                                        value={formData.yourLinkProfile}
+                                        onChange={handleChange}
                                     />
                                     {errors && errors.yourLinkProfile && <div className="invalid-feedback">{errors.yourLinkProfile}</div>}
                                 </div> 
@@ -488,13 +475,13 @@ export default function App() {
                             <div className="mb-3">
                                     <label htmlfor="ContactPoint" className="form-label"><span className="errors">*</span>Point of Contact:</label>
                                     <Form.Select aria-label="Default select example" className={`form-control ${errors && errors.yourContactPoint ? 'is-invalid' : ''}`}
-                                    id="ContactPoint"
+                                    id="yourContactPoint"
                                     name="yourContactPoint"
-                                    value={yourContactPoint}
-                                    onChange={(e) => handleFromTypes(e)}
+                                    value={formData.yourContactPoint}
+                                    onChange={handleFromTypes}
                                     >
-      <option value="null">Point of Contact</option>
-      {typeList.map((type, key) => (
+                                     <option value="null">Point of Contact</option>
+                                    {typeList.map((type, key) => (
                                         <option key={key} title={type.code} value={type.name}>
                                             {type.name}
                                         </option>
@@ -549,11 +536,12 @@ export default function App() {
                                         //required
                                         type="text"
                                         className={`form-control ${errors && errors.yourAboutBusiness ? 'is-invalid' : ''}`}
-                                        id="AboutBusiness"
+                                        id="yourAboutBusiness"
                                         name='yourAboutBusiness'
                                         placeholder="About the Business"
-                                        value={yourAboutBusiness}
-                                        onChange={event => setAboutBusiness(event.target.value)}
+                                        //onChange={event => setAboutBusiness(event.target.value)}
+                                        value={formData.yourAboutBusiness}
+                                        onChange={handleChange}
                                     />
                                 {errors && errors.yourAboutBusiness && <div className="invalid-feedback">{errors.yourAboutBusiness}</div>}
                                 </div>
@@ -570,9 +558,9 @@ export default function App() {
                                         id="yourWebsiteLink"
                                         name='yourWebsiteLink'
                                         placeholder="Add Website Link"
-                                        
-                                        value={yourWebsiteLink}
-                                        onChange={event => setWebsiteLink(event.target.value)}
+                                        value={formData.yourWebsiteLink}
+                                        //onChange={event => setWebsiteLink(event.target.value)}
+                                        onChange={handleChange}
                                     />
 {errors && errors.yourWebsiteLink && <div className="invalid-feedback">{errors.yourWebsiteLink}</div>}                                    
                                 </div>
@@ -590,8 +578,9 @@ export default function App() {
                                         name='yourFacebook'
                                         placeholder="Facebook"
                                         
-                                        value={yourFacebook}
-                                        onChange={event => setFacebook(event.target.value)}
+                                        value={formData.yourFacebook}
+                                        //onChange={event => setFacebook(event.target.value)}
+                                        onChange={handleChange}
                                     />
                                     {errors && errors.yourFacebook && <div className="invalid-feedback">{errors.yourFacebook}</div>}                                    
                                 </div>
@@ -606,8 +595,9 @@ export default function App() {
                                         id="yourTwitter"
                                         name='yourTwitter'
                                         placeholder="Twitter"
-                                        value={yourTwitter}
-                                        onChange={event => setTwitter(event.target.value)}
+                                        value={formData.yourTwitter}
+                                        //onChange={event => setTwitter(event.target.value)}
+                                        onChange={handleChange}
                                     />
                                     {errors && errors.yourTwitter && <div className="invalid-feedback">{errors.yourTwitter}</div>}                                    
                                 </div>
@@ -624,8 +614,9 @@ export default function App() {
                                         id="yourInstagram"
                                         name='yourInstagram'
                                         placeholder="Instagram"
-                                        value={yourInstagram}
-                                        onChange={event => setInstagram(event.target.value)}
+                                        value={formData.yourInstagram}
+                                        //onChange={event => setInstagram(event.target.value)}
+                                        onChange={handleChange}
                                     />
                                     {errors && errors.yourInstagram && <div className="invalid-feedback">{errors.yourInstagram}</div>}                                    
                                 </div>
@@ -640,8 +631,9 @@ export default function App() {
                                         id="yourLinkedin"
                                         name='yourLinkedin'
                                         placeholder="Linkedin"
-                                        value={yourLinkedin}
-                                        onChange={event => setLinkedin(event.target.value)}
+                                        value={formData.yourLinkedin}
+                                        //onChange={event => setLinkedin(event.target.value)}
+                                        onChange={handleChange}
                                     />
                                         {errors && errors.yourLinkedin && <div className="invalid-feedback">{errors.yourLinkedin}</div>}                                    
                                 </div>
@@ -664,17 +656,8 @@ export default function App() {
 <Container className="text-center">             
 <button
         type='submit'
-        className={loader ? 'registers disabled' :'registers disabled'}
-        onClick={(e) => {
-            e.preventDefault();
-            // Check if the checkbox is checked
-            if (!isCheckboxChecked) {
-                setCheckboxError(true);
-            } else {
-                setCheckboxError(false);
-                createPost();
-            }
-        }}
+        className={loader ? 'registers' : 'registers'}
+        onClick={handleSubmit}
         aria-disabled="true"
     >
 {loader ? 'Please wait..' :'Submit'}

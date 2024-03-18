@@ -1795,6 +1795,10 @@ padding-left: 100px !important;
 
 
 @media only screen and (max-width: 600px) {
+    .logo-img {
+        width: 122px;
+    }
+
     .market-banner{
         background-image: url(/images/mobile-market-banner.png);
         height:auto;
@@ -2326,3 +2330,27 @@ border-radius: 25px !important;
 .mb-51{
     height: 800px !important;  
 }
+
+
+.media{
+    background: white;
+    margin-top: -38px;
+    border-top-right-radius: 12px;
+    border-top-left-radius: 12px;
+    width: 62%;
+    align-self: center;
+    border: 1px solid #f2f2f2;
+    z-index: 2;
+}
+.bg-shadow{
+    background: #f9b222;
+    width: 69%;
+    align-self: center;
+    margin-top: -24px;
+    z-index: 1;
+    height:24px;
+    border-top: 24px solid #f9b222;
+    border-right: 14px solid #fffdfd;
+    border-left: 15px solid #fffdfd;
+}
+

@@ -18,7 +18,7 @@ function Summit2024() {
 <Container className='wbg-blue-m rounded-3 mb-2 text-center' style={{width:'80'+'%'}}>
 <Row class="d-flex justify-content-center pt-2">
 <Col lg="12" sm="12" className='pb-4 pt-4'>
-<h3 className='fs-3 text-white bogle-medium mb-2'>New Delhi, Bengaluru, Surat, Guwahati, Chennai, Agra & Lucknow</h3>
+<h3 className='fs-3 text-white bogle-medium mb-2'>New Delhi</h3>
 <Image
         src="/images/time.svg" 
         alt="Bottom Corner Image"

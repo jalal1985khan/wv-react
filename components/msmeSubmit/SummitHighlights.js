@@ -24,13 +24,13 @@ style={{ width: "117px", height: "114px" }}
     height={20}
     className='mb-3'
 />
-              <p className='fs-5'> Shri Narayan Rane, the Minister for Micro, Small, and Medium Enterprises in India, has been invited as a special guest to speak at the event. </p>
+              <p className='fs-5'> Experienced leaders from Flipkart, Walmart Vriddhi, Walmart, Swasti, and other industry experts shared valuable tips on how to grow businesses in the digital world during informative sessions.</p>
               <hr className='dot-line'/>
-              <p className='fs-5'>Listen to experienced leaders from Flipkart, Walmart Vriddhi, Swasti, and other industry experts as they share valuable tips on how to grow your business in the digital world.</p>
+              <p className='fs-5'>A special fireside chat featured a Walmart Vriddhi mentor and graduates of the MSME program. They shared their experiences on the benefits of joining the program and how it prepared, trained, and supported MSMEs in accelerating their business growth.</p>
               <hr className='dot-line'/>
-              <p className='fs-5'>There will also be a special fireside chat with mentors from Walmart Vriddhi and MSMEs who have successfully graduated from the program. They will share their experiences on the benefits of joining the program.</p>
-              <hr className='dot-line'/>
-<p className='fs-5'>Please do join these informative sessions and learn how it prepares, trains, and supports MSMEs in accelerating their business growth.</p>          
+              <p className='fs-5'>Attendees had the opportunity to learn from these sessions and gain insights into strategies for enhancing their businesses in the digital realm.</p>
+              {/* <hr className='dot-line'/> */}
+{/* <p className='fs-5'>Please do join these informative sessions and learn how it prepares, trains, and supports MSMEs in accelerating their business growth.</p>           */}
             
             </Col>
             <Col lg={2} className='d-flex justify-content-end'>

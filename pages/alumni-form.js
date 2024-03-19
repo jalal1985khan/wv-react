@@ -166,20 +166,12 @@ export default function App() {
         // Update product images state
         setProductImages(fileList);
     };
-
-
-
-
-    
+ 
     const handleSubmit = async(event) => {
         // 👇️ prevent page refresh
         event.preventDefault();
         setLoader(true);
         // Perform form empty validation
-
-       
-
-
 
     // if (!FullName || !WVProgramID || !yourEmail || !yourDesignation || !yourCompanyName || !yourLocation || !yourBusinessCategory || !FromTypes || !yourAboutBusiness || !yourLinkProfile || !yourWebsiteLink || !yourFacebook || !yourTwitter || !yourInstagram || !yourLinkedin || !YourProductImage.length) {
     //     setErrors({ formEmpty: "Please fill out all fields" });
@@ -187,18 +179,17 @@ export default function App() {
     // }
 
     // Perform email validation
-
-
         // // Reset errors if no validation errors
         
+        //setErrors({ formEmpty: "Please fill out all fields" });
 
-        
+
         if (!yourEmail.value || !yourAboutBusiness.value  || !FromTypes  || !YourProductImage.length) {
             setErrors({ formEmpty: "Please fill out all fields" });
-           //return;
-           console.log('feilds are empty')
-           
-
+            setLoader(false);
+            console.log('feilds are empty')
+            
+            //return;
        }
         
         

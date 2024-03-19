@@ -128,7 +128,7 @@ export default function App() {
     const [yourLocation, setLocation] = useState(null);
     const [yourBusinessCategory, setBusinessCategory] = useState(null);
     const [yourLinkProfile, setLinkProfile] = useState(null);
-    const [yourProfileImage, setProfileImage] = useState([]);
+    const [yourProfileImage, setProfileImage] = useState(null);
     const [yourProductImage, setProductImages] = useState([]);
     const [yourAboutBusiness, setAboutBusiness] = useState(null);
     const [yourWebsiteLink, setWebsiteLink] = useState(null);
@@ -149,14 +149,18 @@ export default function App() {
     const desc = "Fill the form to be a part of the Walmart Vriddhi program and unlock your business growth!"
     const Myimg ="/images/registration_banner.png"
 
-    const handleFileChange = (event) => {
-        setYourFile(event.target.value);
-        setProfileImage(Array.from(event.target.files))
-      };
-    const handleProductChange = (event) => {
-        setProductFile(event.target.value);
-        //setProductImages(event.target.value)
-        setProductImages(Array.from(event.target.files));
+    const handleFileChange = (e) => {
+        const selectedFile = e.target.files[0];
+        setProfileImage(selectedFile);
+        //alert(selectedFile)
+    };
+    
+    const handleProductChange = (e) => {
+        const files = e.target.files;
+        // Convert FileList to array
+        const fileList = Array.from(files);
+        // Update product images state
+        setProductImages(fileList);
     };
     
     const handleSubmit = event => {
@@ -209,9 +213,7 @@ export default function App() {
             setLoader(false); // Stop loader
             return;
         }
-        yourProfileImage.forEach((file, index) => {
-            formData.append(`yourProfileImage[${index}]`, file);
-        });
+        formData.append('yourProfileImage', yourProfileImage);  
     
         // Append product images
         if (yourProductImage.length === 0) {
@@ -222,9 +224,13 @@ export default function App() {
             setLoader(false); // Stop loader
             return;
         }
-        yourProductImage.forEach((file, index) => {
-            formData.append(`yourProductImage[${index}]`, file);
-        });
+        yourProductImage.forEach((image, index) => {
+            formData.append(`yourProductImage_${index}`, image);
+            // formData.append(`yourProductImage`, image);
+            });
+        // yourProductImage.forEach((file, index) => {
+        //    // formData.append(`yourProductImage[${index}]`, file);
+        // });
     
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(yourEmail)) {
@@ -254,7 +260,7 @@ export default function App() {
             return;
         }
     
-        axios.post(`${configData.SERVER_FROM}contact-form-7/v1/contact-forms/26975/feedback`,
+        axios.post(`${configData.SERVER_FROM}contact-form-7/v1/contact-forms/27012/feedback`,
             formData,
             {
                 headers: {

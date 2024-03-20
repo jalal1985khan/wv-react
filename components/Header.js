@@ -157,6 +157,9 @@ const SuccessStories = () => {
                       <Link href="/marketplace" className={pathname == "/marketplace" ? "active nav-link px-5" : "nav-link px-5"} aria-current="page" >Walmart Marketplace</Link>
                     </li>
                     <li className="nav-item">
+                      <Link href="/msme-Summit-2024" className={pathname == "/msme-Summit-2024" ? "active nav-link px-5" : "nav-link px-5"} aria-current="page" >MSME Summit 2024</Link>
+                    </li>
+                    <li className="nav-item">
                       <Link href="/contact-us" className= {pathname == "/contact-us" ? "active nav-link px-5" : "nav-link px-5"}  aria-current="page" >Contact us</Link>
                     </li>
                   </ul>

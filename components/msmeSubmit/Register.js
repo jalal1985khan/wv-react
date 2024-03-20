@@ -17,7 +17,7 @@ function Register() {
      </Container>
     <Row>
         <Col>
-          <p className='mt-1 fs-5'>This unique segment featured Mr. V S Kumar, a Walmart Vriddhi mentor, along with Walmart Vriddhi graduates Mr. Vikalp Maithil, Co-founder of Pavika Organics, and Ms. Preeti Bhandari, Founder of Naturally Pahadi. They shared their entrepreneurial journeys in an insightful discussion moderated by Mr. Shiv Kumar, Chief Mentor of Swasti and Co-Founder of Catalyst Group.</p>
+          <p className='mt-1 fs-5'> This unique segment featured Mr. V. S. Kumar, a Walmart Vriddhi mentor, along with Walmart Vriddhi graduates Mr. Vikalp Maithil, Co-founder of Pavika Organics, and Ms. Preeti Bhandari, Founder of Naturally Pahadi. They shared their entrepreneurial journeys in an insightful discussion moderated by Mr. Shiv Kumar, Chief Mentor of Swasti and Co-Founder of Catalyst Group.</p>
           <Container>
           <Image src="/images/chat.png" height={300} width={300} className='w-100 h-100'/>  
         </Container>

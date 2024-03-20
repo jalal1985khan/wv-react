@@ -205,7 +205,7 @@ export default function App() {
         formData.append('utm_id', query.utm_id);
     
         // Append profile images
-        if (yourProfileImage.length === 0) {
+        if (yourProfileImage === null) {
             setErrors(prevErrors => ({
                 ...prevErrors,
                 yourProfileImage: 'Please upload your profile image.',
@@ -274,6 +274,7 @@ export default function App() {
     
                 if (msg === 'mail_sent') {
                     setShow(true);
+                    setLoader(false)
                 } else if (msg === 'validation_failed') {
                     const fieldErrors = {};
                     const { invalid_fields } = response.data;
@@ -281,8 +282,10 @@ export default function App() {
                         fieldErrors[field.field] = field.message;
                     });
                     setErrors(fieldErrors);
+                    setLoader(false)
                 }
                 console.log(response.data);
+                setLoader(false)
             })
             .catch(error => {
                 setLoading(false);

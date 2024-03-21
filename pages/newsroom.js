@@ -19,7 +19,7 @@ const Webinars = () => {
     const pathname = usePathname()
     const title = "MSME growth program, MSME growth journey program, MSME Supply Chain Management, msme online training program";
     const desc = "Walmart Vriddhi has assisted countless small businesses in going digital and growing their market reach Learn more about the different steps of the MSME growth journey program here";
-    const banner = '/images/newsroom.png';
+    const banner = '/images/Newsroom-banner.jpg';
     const url = 'https://www.walmartvriddhi.org/msme-growth-journey/'; 
 
 

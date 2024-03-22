@@ -66,7 +66,7 @@ return (
         cardType: 'summary_large_image',
       }}
     />   
-        <Container fluid key={post.id} className="success_post d-flex align-items-end wbg-main" style={{ backgroundImage: `url(${post['acf']['inside_banner']})`}}>
+        <Container fluid key={post.id} className="success_post d-flex align-items-end wbg-main" style={{ backgroundImage: `url(${post['acf']['inside_banner']})`,backgroundSize:'contain'}}>
         <Container className="py-4 wbg-main">
                 <h1 className="text-white fs-2" dangerouslySetInnerHTML={{__html:post['title']['rendered']}}></h1>
                 </Container>

@@ -10,7 +10,7 @@ import date from 'date-and-time';
 const SuccessStories = () => {
   const pathname = usePathname();
   const [movies, setMovies] = useState([]);
-  const [page, setPage] = useState(10);
+  const [page, setPage] = useState(9);
   const [loading, setLoading] = useState(false);
   const [next, setNext] = useState();
   const [total, setTotal] = useState(0);
@@ -18,7 +18,6 @@ const SuccessStories = () => {
 
   const fetchContent = useCallback(async () => {
     setLoading(true);
-
     try {
       const [moviesResponse, categoriesResponse] = await Promise.all([
         fetch(`${configData.SERVER_URL}posts?_embed&categories[]=13&&production[]=${configData.SERVER}&status[]=publish&per_page=${page}`),
